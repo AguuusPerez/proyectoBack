@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h2>Carrito de Compras</h2>
+    <div class="productos">
+        {% for producto in productos %}
+        <div class="producto-carrito">
+            <div class="imagen">
+                {% if producto.imagen %}
+                    <img src="{{ producto.imagen }}" alt="{{ producto.nombre_disco }}">
+                {% else %}
+                    <img src="{% static 'img/Kanye01.jpeg' %}" alt="Imagen no disponible">
+                {% endif %}
+            </div>
+            <div class="info">
+                <h3>{{ producto.nombre }}</h3>
+                <p>Precio unitario: ${{ producto.precio }}</p>
+                <p>Cantidad: {{ producto.cantidad }}</p>
+                <p>Subtotal: ${{ producto.precio|floatformat:"2" }}</p>
+                <!-- Botón para eliminar producto -->
+            </div>
+        </div>
+        {% endfor %}
+   
+        <div class="total">
+            <h3>Total del Carrito: ${{ total|floatformat:"2" }}</h3>
+            <!-- Botón para limpiar el carrito -->
+            <form action="{% url 'limpiar_carro' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-secondary">Vaciar Carrito</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

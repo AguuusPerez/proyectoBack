@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container">
+        <h1 class="my-4">Resultados de la búsqueda para "{{ query }}"</h1>
+        
+        {% if resultados %}
+            <div class="row">
+                {% for producto in resultados %}
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    {% if producto.imagen_tapa %}
+                                        <img src="{{ producto.imagen_tapa.url }}" class="img-fluid rounded-start" alt="Imagen de la tapa del disco">
+                                    {% else %}
+                                        <img src="{% static 'img/' %}" class="img-fluid rounded-start" alt="Imagen de la tapa del disco por defecto">
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ producto.nombre_artista }}</h5>
+                                        <h6 class="card-subtitle mb-2 text-muted">{{ producto.nombre_disco }}</h6>
+                                        <p class="card-text">{{ producto.descripcion }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-center">No se encontraron resultados para "{{ query }}".</p>
+        {% endif %}
+    </div>
+{% endblock %}
+
